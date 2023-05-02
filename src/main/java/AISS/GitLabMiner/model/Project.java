@@ -13,7 +13,7 @@ public class Project {
     @JsonProperty("name")
     private String name;
     @JsonProperty("web_url")
-    private String web_url;
+    private String webUrl;
     @JsonProperty("commits")
     private List<Commit> commits;
     @JsonProperty("commits")
@@ -21,10 +21,11 @@ public class Project {
 
     public Project(){
     }
-    public Project(String id, String name, String web_url, List<Commit> commits, List<Issue> issues){
+
+    public Project(String id, String name, String webUrl, List<Commit> commits, List<Issue> issues){
         this.id = id;
         this.name = name;
-        this.web_url = web_url;
+        this.webUrl = webUrl;
         this.commits = commits;
         this.issues = issues;
     }
@@ -48,11 +49,11 @@ public class Project {
     }
     @JsonProperty("web_url")
     public String getWeb_url() {
-        return web_url;
+        return webUrl;
     }
     @JsonProperty("web_url")
     public void setWeb_url(String web_url) {
-        this.web_url = web_url;
+        this.webUrl = web_url;
     }
 
     public List<Commit> getCommits() {
