@@ -18,3 +18,4 @@ public class GitLabMinerApplication {
 		return builder.build();
 	}
 }
+
