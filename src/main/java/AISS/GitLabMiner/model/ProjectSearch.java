@@ -11,7 +11,5 @@ public class ProjectSearch {
         this.data = data;
     }
     @JsonProperty("data")
-    public List<Project> getData() {
-        return data;
-    }
+    public List<Project> getData() { return data; }
 }

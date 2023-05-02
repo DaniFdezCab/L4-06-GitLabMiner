@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Project {
@@ -70,5 +71,29 @@ public class Project {
 
     public void setIssue(List<Issue> issues) {
         this.issues = issues;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", webUrl='" + webUrl + '\'' +
+                ", commits=" + commits +
+                ", issues=" + issues +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return Objects.equals(id, project.id) && Objects.equals(name, project.name) && Objects.equals(webUrl, project.webUrl) && Objects.equals(commits, project.commits) && Objects.equals(issues, project.issues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, webUrl, commits, issues);
     }
 }

@@ -72,6 +72,7 @@ public class User {
         return "User{" +
                 "id='" + id + '\'' +
                 ", userName='" + userName + '\'' +
+                ", name='" + name + '\'' +
                 ", avatarUrl='" + avatarUrl + '\'' +
                 ", webUrl='" + webUrl + '\'' +
                 '}';
@@ -82,11 +83,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(userName, user.userName) && Objects.equals(avatarUrl, user.avatarUrl) && Objects.equals(webUrl, user.webUrl);
+        return Objects.equals(id, user.id) && Objects.equals(userName, user.userName) && Objects.equals(name, user.name) && Objects.equals(avatarUrl, user.avatarUrl) && Objects.equals(webUrl, user.webUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userName, avatarUrl, webUrl);
+        return Objects.hash(id, userName, name, avatarUrl, webUrl);
     }
 }

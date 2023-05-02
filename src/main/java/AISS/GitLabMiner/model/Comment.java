@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Comment {
@@ -62,8 +63,29 @@ public class Comment {
             this.updated_at = updated_at;
         }
 
-
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id='" + id + '\'' +
+                ", body='" + body + '\'' +
+                ", created_at='" + created_at + '\'' +
+                ", updated_at='" + updated_at + '\'' +
+                '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return Objects.equals(id, comment.id) && Objects.equals(body, comment.body) && Objects.equals(created_at, comment.created_at) && Objects.equals(updated_at, comment.updated_at);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, body, created_at, updated_at);
+    }
+}
     
 
 
