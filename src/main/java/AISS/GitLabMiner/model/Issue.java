@@ -42,8 +42,8 @@ public class Issue {
     }
 
     public Issue(String id, String ref_id, String title, String description, String state,
-                  String created_at, String updated_at, List<String> labels, Integer upVotes,
-                  Integer downVotes){
+                 String created_at, String updated_at, List<String> labels, Integer upVotes,
+                 Integer downVotes){
 
         this.id = id;
         this.ref_id = ref_id;
