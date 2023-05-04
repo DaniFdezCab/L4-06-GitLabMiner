@@ -42,14 +42,16 @@ public class CommitService {
         LocalDateTime since = LocalDateTime.now().minusDays(sinceDays);
 
         // FIRST PAGE
+        // YYYY-MM-DDTHH:MM:SSZ
 
-        String uri = "https://gitlab.com/api/v4/projects/" + id + "/repository/commits?since=" + since.format(DateTimeFormatter.ofPattern("YYYY-MM-DDTHH:MM:SSZ")) + "?private_token=glpat-2_yFGw7WLXHPBHEZHbG5";
+        String uri = "https://gitlab.com/api/v4/projects/" + id + "/repository/commits?since=" + since.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")).toString() + "?private_token=glpat-2_yFGw7WLXHPBHEZHbG5";
 
-        logger.debug("retrieving commit from page 1" + uri);
+        System.out.println(uri);
+        // logger.debug("retrieving commit from page 1" + uri);
 
         ResponseEntity<Commit[]> response = getCommits(uri);
         List<Commit> pageCommits = Arrays.stream(response.getBody()).toList();
-        logger.debug(pageCommits.size() + "Commits retrieved.");
+        // logger.debug(pageCommits.size() + "Commits retrieved.");
 
         commits.addAll(pageCommits);
 
@@ -58,13 +60,13 @@ public class CommitService {
         String nextPageUrl = Utils.getNextPageUrl(response.getHeaders());
         int page = 2;
         while (nextPageUrl != null && page <= maxPages){
-            logger.debug("Retrieving commits from page" + page + ": " + nextPageUrl);
+            // logger.debug("Retrieving commits from page" + page + ": " + nextPageUrl);
             response = getCommits(nextPageUrl);
             pageCommits = Arrays.stream(response.getBody()).toList();
-            logger.debug(pageCommits.size() + "Commits retrieved.");
+            // logger.debug(pageCommits.size() + "Commits retrieved.");
             nextPageUrl = Utils.getNextPageUrl(response.getHeaders());
             page++;
-            commits.addAll(pageCommits);
+
         }
         return commits;
 
