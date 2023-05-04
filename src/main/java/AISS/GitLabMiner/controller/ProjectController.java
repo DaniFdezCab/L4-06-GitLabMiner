@@ -25,7 +25,7 @@ public class ProjectController {
                            @RequestParam(required = false, name = "maxPages") Integer maxPages) {
         Project project = this.project.findProject(id);
         project.setCommits(commits.getAllCommits(id,sinceCommits, maxPages));
-        project.setIssue(issues.getALlIssues(id));
+        project.setIssue(issues.getALlIssues(id,sinceIssues, maxPages));
 
         return project;
     }
