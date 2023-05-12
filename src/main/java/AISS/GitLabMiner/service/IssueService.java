@@ -41,8 +41,8 @@ public class IssueService {
         // logger.debug("retrieving commit from page 1" + uri);
 
         ResponseEntity<Issue[]> response = getIssues(uri);
-        List<Issue> pageCommits = Arrays.stream(response.getBody()).toList();
-        // logger.debug(pageCommits.size() + "Commits retrieved.");
+        List<Issue> pageIssues = Arrays.stream(response.getBody()).toList();
+        // logger.debug(pageCommits.size() + "Issues retrieved.");
 
         commits.addAll(pageCommits);
 
