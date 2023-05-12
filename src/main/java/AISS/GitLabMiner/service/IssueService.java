@@ -3,6 +3,9 @@ package AISS.GitLabMiner.service;
 import AISS.GitLabMiner.model.Commit;
 import AISS.GitLabMiner.model.Issue;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,7 +20,8 @@ import java.util.List;
 public class IssueService {
     @Autowired
     RestTemplate restTemplate;
-    public List<Issue> getIssues(String id){
+
+    public List<Issue> getSimpleIssues(String id){
 
         String uri = "https://gitlab.com/api/v4/projects/" + id + "/issues?private_token=glpat-2_yFGw7WLXHPBHEZHbG5";
 
@@ -26,6 +30,19 @@ public class IssueService {
         return Arrays.stream(issues).toList();
 
     }
+    public ResponseEntity<Issue[]> getIssues(String uri) {
+
+        //Request
+        HttpHeaders headers = new HttpHeaders();
+
+        HttpEntity<Issue[]> request = new HttpEntity<>(null, headers);
+
+        //send
+        ResponseEntity<Issue[]> response = restTemplate.exchange(uri, HttpMethod.GET, request, Issue[].class);
+
+        return response;
+    }
+
 
     public List<Issue> getAllIssues(String id, Integer sinceDays, Integer maxPages){
 
@@ -44,22 +61,22 @@ public class IssueService {
         List<Issue> pageIssues = Arrays.stream(response.getBody()).toList();
         // logger.debug(pageCommits.size() + "Issues retrieved.");
 
-        commits.addAll(pageCommits);
+        issues.addAll(pageIssues);
 
         // 2..N PAGE
 
         String nextPageUrl = Utils.getNextPageUrl(response.getHeaders());
         int page = 2;
         while (nextPageUrl != null && page <= maxPages){
-            // logger.debug("Retrieving commits from page" + page + ": " + nextPageUrl);
-            response = getCommits(nextPageUrl);
-            pageCommits = Arrays.stream(response.getBody()).toList();
-            // logger.debug(pageCommits.size() + "Commits retrieved.");
+            // logger.debug("Retrieving issues from page" + page + ": " + nextPageUrl);
+            response = getIssues(nextPageUrl);
+            pageIssues = Arrays.stream(response.getBody()).toList();
+            // logger.debug(pageCommits.size() + "Issues retrieved.");
             nextPageUrl = Utils.getNextPageUrl(response.getHeaders());
             page++;
 
         }
-        return commits;
+        return issues;
 
     }
 }
