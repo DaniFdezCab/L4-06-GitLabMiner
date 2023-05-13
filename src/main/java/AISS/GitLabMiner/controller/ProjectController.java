@@ -27,6 +27,13 @@ public class ProjectController {
                            @RequestParam(required = false, name = "sinceCommits") Integer sinceCommits,
                            @RequestParam(required = false, name = "sinceIssues") Integer sinceIssues,
                            @RequestParam(required = false, name = "maxPages") Integer maxPages) {
+        if(sinceCommits==null){
+            sinceCommits=2;
+        }if(sinceIssues==null) {
+            sinceIssues=20;
+        }if(maxPages==null){
+            maxPages=2;
+        }
         Project project = this.project.findProject(id);
         project.setCommits(commits.getAllCommits(id,sinceCommits, maxPages));
         project.setIssue(issues.getSimpleIssues(id));
@@ -38,6 +45,13 @@ public class ProjectController {
                                @RequestParam(required = false, name = "sinceCommits") Integer sinceCommits,
                                @RequestParam(required = false, name = "sinceIssues") Integer sinceIssues,
                                @RequestParam(required = false, name = "maxPages") Integer maxPages) {
+        if(sinceCommits==null){
+            sinceCommits=2;
+        }if(sinceIssues==null) {
+            sinceIssues=20;
+        }if(maxPages==null){
+            maxPages=2;
+        }
         Project project = this.project.findProject(id);
         project.setCommits(commits.getAllCommits(id,sinceCommits, maxPages));
         project.setIssue(issues.getSimpleIssues(id));
