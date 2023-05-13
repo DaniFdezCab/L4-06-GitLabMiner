@@ -10,7 +10,8 @@ public class Issue {
 
     @JsonProperty("id")
     private String id;
-    @JsonProperty("ref_id")
+
+    @JsonProperty("iid")
     private String ref_id;
     @JsonProperty("title")
     private String title;
@@ -32,10 +33,10 @@ public class Issue {
     @JsonProperty("labels")
     private List<String> labels;
 
-    @JsonProperty("upVotes")
+    @JsonProperty("upvotes")
     private Integer upVotes;
 
-    @JsonProperty("downVotes")
+    @JsonProperty("downvotes")
     private Integer downVotes;
 
     public Issue(){
