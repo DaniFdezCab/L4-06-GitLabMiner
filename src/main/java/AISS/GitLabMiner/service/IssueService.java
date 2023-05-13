@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 @Service
 public class IssueService {
     @Autowired
@@ -52,7 +53,7 @@ public class IssueService {
         // FIRST PAGE
         // YYYY-MM-DDTHH:MM:SSZ
 
-        String uri = "https://gitlab.com/api/v4/projects/" + id + "/repository/issues?created_after=" + since.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")).toString() + "?private_token=glpat-2_yFGw7WLXHPBHEZHbG5";
+        String uri = "https://gitlab.com/api/v4/projects/" + id + "/issues?updated_after=" + since.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")).toString() + "?private_token=glpat-2_yFGw7WLXHPBHEZHbG5";
 
         System.out.println(uri);
         // logger.debug("retrieving commit from page 1" + uri);

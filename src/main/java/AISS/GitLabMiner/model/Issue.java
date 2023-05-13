@@ -13,6 +13,7 @@ public class Issue {
 
     @JsonProperty("iid")
     private String ref_id;
+
     @JsonProperty("title")
     private String title;
     @JsonProperty("description")
@@ -39,12 +40,18 @@ public class Issue {
     @JsonProperty("downvotes")
     private Integer downVotes;
 
+    @JsonProperty("author")
+    private User asigneeUser;
+
+    @JsonProperty("assignee")
+    private User authorUser;
+
     public Issue(){
     }
 
     public Issue(String id, String ref_id, String title, String description, String state,
                  String created_at, String updated_at, List<String> labels, Integer upVotes,
-                 Integer downVotes){
+                 Integer downVotes, User asigneeUser, User authorUser){
 
         this.id = id;
         this.ref_id = ref_id;
@@ -56,6 +63,8 @@ public class Issue {
         this.labels = labels;
         this.upVotes = upVotes;
         this.downVotes = downVotes;
+        this.asigneeUser = asigneeUser;
+        this.authorUser = authorUser;
 
     }
 
@@ -103,6 +112,14 @@ public class Issue {
 
     public void setDownVotes(Integer downVotes) { this.downVotes = downVotes; }
 
+    public User getAsigneeUser() { return asigneeUser; }
+
+    public void setAsigneeUser(User asigneeUser) { this.asigneeUser = asigneeUser; }
+
+    public User getAuthorUser() { return authorUser; }
+
+    public void setAuthorUser(User authorUser) { this.authorUser = authorUser; }
+
     @Override
     public String toString() {
         return "Issue{" +
@@ -117,6 +134,9 @@ public class Issue {
                 ", labels=" + labels +
                 ", upVotes=" + upVotes +
                 ", downVotes=" + downVotes +
+                ", asigneeUser=" + asigneeUser +
+                ", authorUser=" + authorUser +
+
                 '}';
     }
 

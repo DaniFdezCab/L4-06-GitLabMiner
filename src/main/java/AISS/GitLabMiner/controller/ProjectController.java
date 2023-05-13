@@ -4,21 +4,32 @@ import AISS.GitLabMiner.model.Project;
 import AISS.GitLabMiner.service.CommitService;
 import AISS.GitLabMiner.service.IssueService;
 import AISS.GitLabMiner.service.ProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 
 @RestController
 @RequestMapping("/api/project")
 public class ProjectController {
 
+    @Autowired
+    ProjectService projectService;
+
+    @Autowired
+    RestTemplate restTemplate;
+
     private final ProjectService project;
     private final CommitService commits;
     private final IssueService issues;
+
     public ProjectController(ProjectService project, CommitService commits, IssueService issues){
         this.project = project;
         this.commits = commits;
         this.issues = issues;
     }
+
     @GetMapping("/{id}")
     public Project findAll(@PathVariable String id,
                            @RequestParam(required = false, name = "sinceCommits") Integer sinceCommits,
