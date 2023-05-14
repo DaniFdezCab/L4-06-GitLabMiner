@@ -41,17 +41,17 @@ public class Issue {
     private Integer downVotes;
 
     @JsonProperty("author")
-    private User asigneeUser;
+    private User authorUser;
 
     @JsonProperty("assignee")
-    private User authorUser;
+    private User asigneeUser;
 
     public Issue(){
     }
 
     public Issue(String id, String ref_id, String title, String description, String state,
                  String created_at, String updated_at, List<String> labels, Integer upVotes,
-                 Integer downVotes, User asigneeUser, User authorUser){
+                 Integer downVotes, User authorUser, User asigneeUser){
 
         this.id = id;
         this.ref_id = ref_id;

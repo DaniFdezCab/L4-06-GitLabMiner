@@ -1,5 +1,7 @@
 package AISS.GitLabMiner.controller;
 
+import AISS.GitLabMiner.etl.Transformation;
+import AISS.GitLabMiner.model.GMProject;
 import AISS.GitLabMiner.model.Project;
 import AISS.GitLabMiner.service.CommitService;
 import AISS.GitLabMiner.service.IssueService;
@@ -17,10 +19,12 @@ public class ProjectController {
     private final ProjectService project;
     private final CommitService commits;
     private final IssueService issues;
-    public ProjectController(ProjectService project, CommitService commits, IssueService issues){
+    private final Transformation transformation;
+    public ProjectController(ProjectService project, CommitService commits, IssueService issues, Transformation transformation){
         this.project = project;
         this.commits = commits;
         this.issues = issues;
+        this.transformation = transformation;
     }
     @GetMapping("/prueba/{id}")
     public Project findAll(@PathVariable String id,
@@ -41,10 +45,10 @@ public class ProjectController {
         return project;
     }
     @GetMapping("/{id}")
-    public Project sendProject(@PathVariable String id,
-                               @RequestParam(required = false, name = "sinceCommits") Integer sinceCommits,
-                               @RequestParam(required = false, name = "sinceIssues") Integer sinceIssues,
-                               @RequestParam(required = false, name = "maxPages") Integer maxPages) {
+    public GMProject sendProject(@PathVariable String id,
+                                 @RequestParam(required = false, name = "sinceCommits") Integer sinceCommits,
+                                 @RequestParam(required = false, name = "sinceIssues") Integer sinceIssues,
+                                 @RequestParam(required = false, name = "maxPages") Integer maxPages) {
         if(sinceCommits==null){
             sinceCommits=2;
         }if(sinceIssues==null) {
@@ -54,14 +58,14 @@ public class ProjectController {
         }
         Project project = this.project.findProject(id);
         project.setCommits(commits.getAllCommits(id,sinceCommits, maxPages));
-        project.setIssue(issues.getSimpleIssues(id));
+        project.setIssue(issues.getAllIssues(id, sinceCommits,  maxPages));
 
         /*
        restTemplate.postForObject("http://localhost:8081/api/project/" + id
                 + "?sinceCommits=" + sinceCommits + "&sinceIssues="
                 + sinceIssues +"&maxPages=" + maxPages, project, Project.class);
-*/
-        return project;
+    */
+        return transformation.parseProject(project);
     }
 
 

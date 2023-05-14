@@ -1,14 +1,12 @@
 package AISS.GitLabMiner.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
-import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Project {
+public class GMProject {
     @JsonProperty("id")
     private String id;
     @JsonProperty("name")
@@ -18,12 +16,12 @@ public class Project {
     @JsonProperty("commits")
     private List<Commit> commits;
     @JsonProperty("issues")
-    private List<Issue> issues;
+    private List<GMIssue> issues;
 
-    public Project(){
+    public GMProject(){
     }
 
-    public Project(String id, String name, String webUrl, List<Commit> commits, List<Issue> issues){
+    public GMProject(String id, String name, String webUrl, List<Commit> commits, List<GMIssue> issues){
         this.id = id;
         this.name = name;
         this.webUrl = webUrl;
@@ -56,20 +54,20 @@ public class Project {
     public void setWeb_url(String web_url) {
         this.webUrl = web_url;
     }
-
+    @JsonProperty("commits")
     public List<Commit> getCommits() {
         return commits;
     }
-
+    @JsonProperty("commits")
     public void setCommits(List<Commit> commits) {
         this.commits = commits;
     }
-
-    public List<Issue> getIssue() {
+    @JsonProperty("issues")
+    public List<GMIssue> getIssue() {
         return issues;
     }
-
-    public void setIssue(List<Issue> issues) {
+    @JsonProperty("issues")
+    public void setIssue(List<GMIssue> issues) {
         this.issues = issues;
     }
 
@@ -78,22 +76,10 @@ public class Project {
         return "Project{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", webUrl='" + webUrl + '\'' +
+                ", web_url='" + webUrl + '\'' +
                 ", commits=" + commits +
                 ", issues=" + issues +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Project project = (Project) o;
-        return Objects.equals(id, project.id) && Objects.equals(name, project.name) && Objects.equals(webUrl, project.webUrl) && Objects.equals(commits, project.commits) && Objects.equals(issues, project.issues);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, webUrl, commits, issues);
-    }
 }
