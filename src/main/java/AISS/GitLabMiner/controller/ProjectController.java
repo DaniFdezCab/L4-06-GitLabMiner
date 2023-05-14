@@ -7,7 +7,9 @@ import AISS.GitLabMiner.service.CommitService;
 import AISS.GitLabMiner.service.IssueService;
 import AISS.GitLabMiner.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
@@ -40,11 +42,12 @@ public class ProjectController {
         }
         Project project = this.project.findProject(id);
         project.setCommits(commits.getAllCommits(id,sinceCommits, maxPages));
-        project.setIssue(issues.getSimpleIssues(id));
+        project.setIssue(issues.getAllIssues(id, sinceCommits,  maxPages));
 
         return project;
     }
-    @GetMapping("/{id}")
+    @PostMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
     public GMProject sendProject(@PathVariable String id,
                                  @RequestParam(required = false, name = "sinceCommits") Integer sinceCommits,
                                  @RequestParam(required = false, name = "sinceIssues") Integer sinceIssues,
@@ -60,12 +63,10 @@ public class ProjectController {
         project.setCommits(commits.getAllCommits(id,sinceCommits, maxPages));
         project.setIssue(issues.getAllIssues(id, sinceCommits,  maxPages));
 
-        /*
-       restTemplate.postForObject("http://localhost:8081/api/project/" + id
-                + "?sinceCommits=" + sinceCommits + "&sinceIssues="
-                + sinceIssues +"&maxPages=" + maxPages, project, Project.class);
-    */
-        return transformation.parseProject(project);
+        GMProject p = restTemplate.postForObject("http://localhost:8080/gitminer/projects", transformation.parseProject(project), GMProject.class);
+
+
+        return p;
     }
 
 
