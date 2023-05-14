@@ -29,7 +29,7 @@ public class ProjectController {
         this.transformation = transformation;
     }
     @GetMapping("/prueba/{id}")
-    public Project findAll(@PathVariable String id,
+    public GMProject findAll(@PathVariable String id,
                            @RequestParam(required = false, name = "sinceCommits") Integer sinceCommits,
                            @RequestParam(required = false, name = "sinceIssues") Integer sinceIssues,
                            @RequestParam(required = false, name = "maxPages") Integer maxPages) {
@@ -41,10 +41,10 @@ public class ProjectController {
             maxPages=2;
         }
         Project project = this.project.findProject(id);
-        project.setCommits(commits.getAllCommits(id,sinceCommits, maxPages));
-        project.setIssue(issues.getAllIssues(id, sinceCommits,  maxPages));
+        project.setCommits(commits.getAllCommits(id, sinceCommits, maxPages));
+        project.setIssue(issues.getAllIssues(id, sinceIssues,  maxPages));
 
-        return project;
+        return transformation.parseProject(project);
     }
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
@@ -61,7 +61,7 @@ public class ProjectController {
         }
         Project project = this.project.findProject(id);
         project.setCommits(commits.getAllCommits(id,sinceCommits, maxPages));
-        project.setIssue(issues.getAllIssues(id, sinceCommits,  maxPages));
+        project.setIssue(issues.getAllIssues(id, sinceIssues,  maxPages));
 
         GMProject p = restTemplate.postForObject("http://localhost:8080/gitminer/projects", transformation.parseProject(project), GMProject.class);
 
