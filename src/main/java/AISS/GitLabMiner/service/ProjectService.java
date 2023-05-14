@@ -89,13 +89,13 @@ public class ProjectService {
 
     }
 
-    public List<Project> getSimpleProjects(String id) {
+    public Project getSimpleProjects(String id) {
 
         String uri = "https://gitlab.com/api/v4/projects/" + id + "?private_token=glpat-2_yFGw7WLXHPBHEZHbG5";
 
-        Project[] response = restTemplate.getForObject(uri, Project[].class);
+        Project response = restTemplate.getForObject(uri, Project.class);
 
-        return Arrays.stream(response).toList();
+        return response;
     }
 
 
